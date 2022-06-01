@@ -1,5 +1,7 @@
+import s from 'app/App.module.scss';
+
 export const App = () => (
-  <div>
+  <div className={s.appContainer}>
     <div>Header</div>
     <div>Tags</div>
     <div>
