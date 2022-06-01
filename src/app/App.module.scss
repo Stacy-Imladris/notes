@@ -1,4 +1,11 @@
+@import "../common/styles/sass/mixins";
+
 .appContainer {
   background-color: #f1a7cc;
   min-height: 100vh;
+  .appBlock {
+    min-height: 84vh;
+    @include container();
+    @include flex(row, flex-start, flex-start, nowrap);
+  }
 }
