@@ -1,7 +1,7 @@
-@import "../common/styles/sass/mixins";
+@import "src/common/styles/sass/mixins";
 
 .appContainer {
-  background-color: #f1a7cc;
+  background-color: $bgSecondColor;
   min-height: 100vh;
   .appBlock {
     min-height: 84vh;

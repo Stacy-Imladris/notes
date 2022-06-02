@@ -1,9 +1,11 @@
 import s from './Notes.module.scss';
+import { Paginator } from './Paginator/Paginator';
+import { SearchField } from './SearchField/SearchField';
 
 export const Notes = () => (
   <div className={s.notesContainer}>
-    <div>Search</div>
+    <SearchField />
     <div>Notes</div>
-    <div>Paginator</div>
+    <Paginator />
   </div>
 );

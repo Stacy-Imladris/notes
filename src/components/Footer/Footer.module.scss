@@ -1,4 +1,6 @@
+@import 'src/common/styles/sass/variables';
+
 .footerContainer {
-  background-color: lightblue;
+  background-color: $bgColor;
   height: 8vh;
 }
