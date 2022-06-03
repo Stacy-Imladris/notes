@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { v1 } from 'uuid';
 
 import { notesAPI } from '../api/notes-api';
 
@@ -17,46 +18,38 @@ export const getNotes = createAsyncThunk(
   },
 );
 
-/* export const deleteTodolist = createAsyncThunk(
-  'todolists/deleteTodolist',
-  async (Tid: string, { dispatch, rejectWithValue }) => {
-    dispatch(setAppStatus({ status: 'loading' }));
-    dispatch(changeTodolistEntityStatus({ Tid, status: 'loading' }));
+export const deleteNote = createAsyncThunk(
+  'notes/deleteNote',
+  async (id: string, { rejectWithValue }) => {
+    // dispatch(setAppStatus({ status: 'loading' }));
+    // dispatch(changeTodolistEntityStatus({ Tid, status: 'loading' }));
     try {
-      const res = await todolistsAPI.deleteTodolist(Tid);
-      if (res.data.resultCode === 0) {
-        dispatch(setAppStatus({ status: 'succeeded' }));
-        return { Tid };
-      }
-      handleServerAppError(dispatch, res.data);
-      dispatch(changeTodolistEntityStatus({ Tid, status: 'failed' }));
-      return rejectWithValue(null);
+      await notesAPI.deleteNote(id);
+      // dispatch(setAppStatus({ status: 'succeeded' }));
+      return { id };
     } catch (error) {
-      handleServerNetworkError(dispatch, error as Error);
-      dispatch(changeTodolistEntityStatus({ Tid, status: 'failed' }));
+      // handleServerNetworkError(dispatch, error as Error);
+      // dispatch(changeTodolistEntityStatus({ Tid, status: 'failed' }));
       return rejectWithValue(null);
     }
   },
-); */
+);
 
-/* export const createTodolist = createAsyncThunk(
-  'todolists/createTodolist',
-  async (title: string, { dispatch, rejectWithValue }) => {
-    dispatch(setAppStatus({ status: 'loading' }));
+export const createNote = createAsyncThunk(
+  'notes/createNote',
+  async (payload: { title: string; content: string }, { rejectWithValue }) => {
+    const note: NoteType = { ...payload, id: v1() };
+    // dispatch(setAppStatus({ status: 'loading' }));
     try {
-      const res = await todolistsAPI.createTodolist(title);
-      if (res.data.resultCode === 0) {
-        dispatch(setAppStatus({ status: 'succeeded' }));
-        return { todolist: res.data.data.item };
-      }
-      handleServerAppError(dispatch, res.data);
-      return rejectWithValue(null);
-    } catch (error) {
-      handleServerNetworkError(dispatch, error as Error);
+      const data = await notesAPI.createNote(note);
+      // dispatch(setAppStatus({ status: 'succeeded' }));
+      return { note: data };
+    } catch (e) {
+      // handleServerNetworkError(dispatch, error as Error);
       return rejectWithValue(null);
     }
   },
-); */
+);
 
 /* export const updateTodolistTitle = createAsyncThunk(
   'todolists/updateTodolistTitle',
@@ -107,16 +100,16 @@ export const slice = createSlice({
   },
   extraReducers: builder =>
     builder
-      // .addCase(deleteTodolist.fulfilled, (state, action) => {
-      //   const index = state.findIndex(f => f.id === action.payload.Tid)
-      //   if (index > -1) {
-      //     state.splice(index, 1)
-      //   }
-      // })
-      .addCase(getNotes.fulfilled, (state, action) => action.payload.notes),
-  // .addCase(createTodolist.fulfilled, (state, action) => {
-  //   state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
-  // })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        const index = state.findIndex(f => f.id === action.payload.id);
+        if (index > -1) {
+          state.splice(index, 1);
+        }
+      })
+      .addCase(getNotes.fulfilled, (state, action) => action.payload.notes)
+      .addCase(createNote.fulfilled, (state, action) => {
+        state.unshift(action.payload.note);
+      }),
   // .addCase(updateTodolistTitle.fulfilled, (state, action) => {
   //   const index = state.findIndex(f => f.id === action.payload.Tid)
   //   if (index > -1) {
@@ -130,8 +123,7 @@ export const { clearData } = slice.actions;
 
 // types
 export type NoteType = {
-  id: number;
-  order: number;
+  id: string;
   title: string;
   content: string;
 };

@@ -42,13 +42,17 @@
       "error"
     ],
     "@typescript-eslint/no-unused-vars": [
-      "error"
+      "off"
     ],
     "@typescript-eslint/no-magic-numbers": [
       "error",
       {
         "ignoreEnums": true,
-        "ignoreNumericLiteralTypes": true
+        "ignoreNumericLiteralTypes": true,
+        "ignoreArrayIndexes": true,
+        "ignoreDefaultValues": true,
+        "detectObjects": true,
+        "ignore": [-1, 0, 1]
       }
     ],
     "@typescript-eslint/no-use-before-define": [
