@@ -80,42 +80,6 @@ export const updateNote = createAsyncThunk(
     }
   },
 );
-/* export const updateTodolistTitle = createAsyncThunk(
-  'todolists/updateTodolistTitle',
-  async (
-    payload: { Tid: string; title: string },
-    { dispatch, rejectWithValue },
-  ) => {
-    dispatch(setAppStatus({ status: 'loading' }));
-    dispatch(
-      changeTodolistEntityStatus({ Tid: payload.Tid, status: 'loading' }),
-    );
-    try {
-      const res = await todolistsAPI.updateTodolistTitle(
-        payload.Tid,
-        payload.title,
-      );
-      if (res.data.resultCode === 0) {
-        dispatch(setAppStatus({ status: 'succeeded' }));
-        dispatch(
-          changeTodolistEntityStatus({ Tid: payload.Tid, status: 'succeeded' }),
-        );
-        return payload;
-      }
-      handleServerAppError(dispatch, res.data);
-      dispatch(
-        changeTodolistEntityStatus({ Tid: payload.Tid, status: 'failed' }),
-      );
-      return rejectWithValue(null);
-    } catch (error) {
-      handleServerNetworkError(dispatch, error as Error);
-      dispatch(
-        changeTodolistEntityStatus({ Tid: payload.Tid, status: 'failed' }),
-      );
-      return rejectWithValue(null);
-    }
-  },
-); */
 
 const notesInitialState: NoteType[] = [];
 
