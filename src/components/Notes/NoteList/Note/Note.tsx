@@ -1,4 +1,4 @@
-import { NoteType } from '../NoteList';
+import { NoteType } from '../../../../store/notes-reducer';
 
 import s from './Note.module.scss';
 

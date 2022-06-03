@@ -1,22 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import axios from 'axios';
+import { getNotes } from '../../../store/notes-reducer';
+import { selectNotes } from '../../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 import { Note } from './Note/Note';
 import s from './NoteList.module.scss';
 
-export type NoteType = {
-  id: number;
-  order: number;
-  title: string;
-  content: string;
-};
-
 export const NoteList = () => {
-  const [notes, setNotes] = useState<NoteType[]>([]);
+  const notes = useAppSelector(selectNotes);
+  console.log(notes);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/notes').then(res => setNotes(res.data));
+    dispatch(getNotes());
   }, []);
 
   return (
