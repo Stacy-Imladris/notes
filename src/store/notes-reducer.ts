@@ -71,9 +71,9 @@ export const updateNote = createAsyncThunk(
       ...payload.noteModel,
     };
     try {
-      const res = await notesAPI.updateNote(noteModel);
+      const data = await notesAPI.updateNote(noteModel);
       // dispatch(setAppStatus({status: 'succeeded'}))
-      return noteModel;
+      return data;
     } catch (error) {
       // handleServerNetworkError(dispatch, error as Error)
       return rejectWithValue(null);
@@ -86,11 +86,7 @@ const notesInitialState: NoteType[] = [];
 export const slice = createSlice({
   name: 'notes',
   initialState: notesInitialState,
-  reducers: {
-    clearData() {
-      return [];
-    },
-  },
+  reducers: {},
   extraReducers: builder =>
     builder
       .addCase(deleteNote.fulfilled, (state, action) => {
@@ -108,7 +104,6 @@ export const slice = createSlice({
 });
 
 export const notesReducer = slice.reducer;
-export const { clearData } = slice.actions;
 
 // types
 export type NoteType = {

@@ -30,6 +30,7 @@ export const Note = ({ note }: NotePropsType) => {
   };
 
   const turnOffTitleEditMode = () => {
+    dispatch(updateNote({ id: note.id, noteModel: { title } }));
     setIsTitleEditMode(false);
   };
 
@@ -38,22 +39,21 @@ export const Note = ({ note }: NotePropsType) => {
   };
 
   const turnOffContentEditMode = () => {
+    dispatch(
+      updateNote({
+        id: note.id,
+        noteModel: { content },
+      }),
+    );
     setIsContentEditMode(false);
   };
 
   const changeNoteTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateNote({ id: note.id, noteModel: { title: e.currentTarget.value } }),
-    );
+    setTitle(e.currentTarget.value);
   };
 
   const changeNoteContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(
-      updateNote({
-        id: note.id,
-        noteModel: { content: e.currentTarget.value },
-      }),
-    );
+    setContent(e.currentTarget.value);
   };
 
   return (
