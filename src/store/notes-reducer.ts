@@ -14,7 +14,6 @@ export const getNotes = createAsyncThunk(
       // dispatch(setAppStatus({ status: 'succeeded' }));
       return { notes: data };
     } catch (error) {
-      // handleServerNetworkError(dispatch, error as Error);
       return rejectWithValue(null);
     }
   },
@@ -30,8 +29,6 @@ export const deleteNote = createAsyncThunk(
       // dispatch(setAppStatus({ status: 'succeeded' }));
       return { id };
     } catch (error) {
-      // handleServerNetworkError(dispatch, error as Error);
-      // dispatch(changeTodolistEntityStatus({ Tid, status: 'failed' }));
       return rejectWithValue(null);
     }
   },
@@ -47,7 +44,6 @@ export const createNote = createAsyncThunk(
       // dispatch(setAppStatus({ status: 'succeeded' }));
       return { note: data };
     } catch (e) {
-      // handleServerNetworkError(dispatch, error as Error);
       return rejectWithValue(null);
     }
   },
@@ -75,7 +71,6 @@ export const updateNote = createAsyncThunk(
       // dispatch(setAppStatus({status: 'succeeded'}))
       return data;
     } catch (error) {
-      // handleServerNetworkError(dispatch, error as Error)
       return rejectWithValue(null);
     }
   },
