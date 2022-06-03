@@ -65,7 +65,9 @@ export const Note = ({ note }: NotePropsType) => {
           onBlur={turnOffTitleEditMode}
         />
       ) : (
-        <div onDoubleClick={turnOnTitleEditMode}>{note.title}</div>
+        <div onDoubleClick={turnOnTitleEditMode}>
+          <b>{note.title}</b>
+        </div>
       )}
       <button type="button" onClick={removeNote}>
         X
