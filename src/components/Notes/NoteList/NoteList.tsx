@@ -9,7 +9,6 @@ import s from './NoteList.module.scss';
 
 export const NoteList = () => {
   const notes = useAppSelector(selectNotes);
-  console.log(notes);
 
   const dispatch = useAppDispatch();
 
