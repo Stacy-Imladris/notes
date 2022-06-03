@@ -95,7 +95,7 @@ export const slice = createSlice({
       })
       .addCase(getNotes.fulfilled, (state, action) => action.payload.notes)
       .addCase(createNote.fulfilled, (state, action) => {
-        state.unshift(action.payload.note);
+        state.push(action.payload.note);
       })
       .addCase(updateNote.fulfilled, (state, action) => {
         const index = state.findIndex(f => f.id === action.payload.id);

@@ -1,11 +1,8 @@
-import { ChangeEvent, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import {
-  deleteNote,
-  NoteType,
-  updateNote,
-} from '../../../../store/notes-reducer';
-import { useAppDispatch } from '../../../../store/store';
+import { NoteType } from '../../../../store/notes-reducer';
+import { DeleteNoteForm } from '../../../Modals/DeleteNoteForm/DeleteNoteForm';
+import { EditNoteForm } from '../../../Modals/EditNoteForm/EditNoteForm';
 
 import s from './Note.module.scss';
 
@@ -14,73 +11,47 @@ type NotePropsType = {
 };
 
 export const Note = ({ note }: NotePropsType) => {
-  const [isTitleEditMode, setIsTitleEditMode] = useState<boolean>(false);
-  const [isContentEditMode, setIsContentEditMode] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>(note.title);
-  const [content, setContent] = useState<string>(note.content);
+  const [isDeletingOpen, setIsDeletingOpen] = useState<boolean>(false);
+  const [isEditingOpen, setIsEditingOpen] = useState<boolean>(false);
 
-  const dispatch = useAppDispatch();
+  const deleteNoteOff = useCallback(() => {
+    setIsDeletingOpen(false);
+  }, []);
 
-  const removeNote = () => {
-    dispatch(deleteNote(note.id));
-  };
+  const deleteNoteOn = useCallback(() => {
+    setIsDeletingOpen(true);
+  }, []);
 
-  const turnOnTitleEditMode = () => {
-    setIsTitleEditMode(true);
-  };
+  const editNoteOff = useCallback(() => {
+    setIsEditingOpen(false);
+  }, []);
 
-  const turnOffTitleEditMode = () => {
-    dispatch(updateNote({ id: note.id, noteModel: { title } }));
-    setIsTitleEditMode(false);
-  };
-
-  const turnOnContentEditMode = () => {
-    setIsContentEditMode(true);
-  };
-
-  const turnOffContentEditMode = () => {
-    dispatch(
-      updateNote({
-        id: note.id,
-        noteModel: { content },
-      }),
-    );
-    setIsContentEditMode(false);
-  };
-
-  const changeNoteTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
-  };
-
-  const changeNoteContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.currentTarget.value);
-  };
+  const editNoteOn = useCallback(() => {
+    setIsEditingOpen(true);
+  }, []);
 
   return (
     <div className={s.noteContainer}>
-      {isTitleEditMode ? (
-        <input
-          value={title}
-          onChange={changeNoteTitle}
-          onBlur={turnOffTitleEditMode}
-        />
-      ) : (
-        <div onDoubleClick={turnOnTitleEditMode}>
-          <b>{note.title}</b>
-        </div>
-      )}
-      <button type="button" onClick={removeNote}>
+      <DeleteNoteForm
+        onClickNotOpen={deleteNoteOff}
+        isOpen={isDeletingOpen}
+        id={note.id}
+      />
+      <EditNoteForm
+        onClickNotOpen={editNoteOff}
+        isOpen={isEditingOpen}
+        note={note}
+      />
+      <div>
+        <b>{note.title}</b>
+      </div>
+      <button type="button" onClick={editNoteOn}>
+        ✎
+      </button>
+      <button type="button" onClick={deleteNoteOn}>
         X
       </button>
-      {isContentEditMode ? (
-        <textarea
-          value={content}
-          onChange={changeNoteContent}
-          onBlur={turnOffContentEditMode}
-        />
-      ) : (
-        <div onDoubleClick={turnOnContentEditMode}>{note.content}</div>
-      )}
+      <div>{note.content}</div>
     </div>
   );
 };
