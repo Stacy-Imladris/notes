@@ -3,6 +3,8 @@ import { v1 } from 'uuid';
 
 import { notesAPI } from '../api/notes-api';
 
+import { RootState } from './store';
+
 export const getNotes = createAsyncThunk(
   'notes/getNotes',
   async (_, { rejectWithValue }) => {
@@ -51,6 +53,33 @@ export const createNote = createAsyncThunk(
   },
 );
 
+export const updateNote = createAsyncThunk(
+  'notes/updateNote',
+  async (
+    payload: { id: string; noteModel: Partial<NoteType> },
+    { getState, rejectWithValue },
+  ) => {
+    // dispatch(setAppStatus({status: 'loading'}))
+    const note = (getState() as RootState).notes.find(t => t.id === payload.id);
+    if (!note) {
+      return rejectWithValue('task not found in the state');
+    }
+    const noteModel: NoteType = {
+      id: note.id,
+      title: note.title,
+      content: note.content,
+      ...payload.noteModel,
+    };
+    try {
+      const res = await notesAPI.updateNote(noteModel);
+      // dispatch(setAppStatus({status: 'succeeded'}))
+      return noteModel;
+    } catch (error) {
+      // handleServerNetworkError(dispatch, error as Error)
+      return rejectWithValue(null);
+    }
+  },
+);
 /* export const updateTodolistTitle = createAsyncThunk(
   'todolists/updateTodolistTitle',
   async (
@@ -102,20 +131,16 @@ export const slice = createSlice({
     builder
       .addCase(deleteNote.fulfilled, (state, action) => {
         const index = state.findIndex(f => f.id === action.payload.id);
-        if (index > -1) {
-          state.splice(index, 1);
-        }
+        if (index > -1) state.splice(index, 1);
       })
       .addCase(getNotes.fulfilled, (state, action) => action.payload.notes)
       .addCase(createNote.fulfilled, (state, action) => {
         state.unshift(action.payload.note);
+      })
+      .addCase(updateNote.fulfilled, (state, action) => {
+        const index = state.findIndex(f => f.id === action.payload.id);
+        if (index > -1) state[index] = action.payload;
       }),
-  // .addCase(updateTodolistTitle.fulfilled, (state, action) => {
-  //   const index = state.findIndex(f => f.id === action.payload.Tid)
-  //   if (index > -1) {
-  //     state[index].title = action.payload.title
-  //   }
-  // })
 });
 
 export const notesReducer = slice.reducer;

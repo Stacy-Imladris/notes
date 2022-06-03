@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-import { deleteNote, NoteType } from '../../../../store/notes-reducer';
+import {
+  deleteNote,
+  NoteType,
+  updateNote,
+} from '../../../../store/notes-reducer';
 import { useAppDispatch } from '../../../../store/store';
 
 import s from './Note.module.scss';
@@ -10,6 +14,8 @@ type NotePropsType = {
 };
 
 export const Note = ({ note }: NotePropsType) => {
+  const [isTitleEditMode, setIsTitleEditMode] = useState<boolean>(false);
+  const [isContentEditMode, setIsContentEditMode] = useState<boolean>(false);
   const [title, setTitle] = useState<string>(note.title);
   const [content, setContent] = useState<string>(note.content);
 
@@ -19,13 +25,60 @@ export const Note = ({ note }: NotePropsType) => {
     dispatch(deleteNote(note.id));
   };
 
+  const turnOnTitleEditMode = () => {
+    setIsTitleEditMode(true);
+  };
+
+  const turnOffTitleEditMode = () => {
+    setIsTitleEditMode(false);
+  };
+
+  const turnOnContentEditMode = () => {
+    setIsContentEditMode(true);
+  };
+
+  const turnOffContentEditMode = () => {
+    setIsContentEditMode(false);
+  };
+
+  const changeNoteTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      updateNote({ id: note.id, noteModel: { title: e.currentTarget.value } }),
+    );
+  };
+
+  const changeNoteContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(
+      updateNote({
+        id: note.id,
+        noteModel: { content: e.currentTarget.value },
+      }),
+    );
+  };
+
   return (
     <div className={s.noteContainer}>
-      <div>{note.title}</div>
+      {isTitleEditMode ? (
+        <input
+          value={title}
+          onChange={changeNoteTitle}
+          onBlur={turnOffTitleEditMode}
+        />
+      ) : (
+        <div onDoubleClick={turnOnTitleEditMode}>{note.title}</div>
+      )}
       <button type="button" onClick={removeNote}>
         X
       </button>
-      <div>{note.content}</div>
+      {isContentEditMode ? (
+        <textarea
+          value={content}
+          onChange={changeNoteContent}
+          onBlur={turnOffContentEditMode}
+        />
+      ) : (
+        <div onDoubleClick={turnOnContentEditMode}>{note.content}</div>
+      )}
     </div>
   );
 };

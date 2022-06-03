@@ -16,4 +16,9 @@ export const notesAPI = {
   deleteNote(id: string) {
     return instance.delete(`notes/${id}`).then(res => res.data);
   },
+  updateNote(noteModel: NoteType) {
+    return instance
+      .put(`notes/${noteModel.id}`, noteModel)
+      .then(res => res.data);
+  },
 };
