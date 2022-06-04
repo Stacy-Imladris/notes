@@ -1,6 +1,9 @@
 import { useCallback, useState } from 'react';
 
 import { NoteType } from '../../../../store/notes-reducer';
+import { selectTags } from '../../../../store/selectors';
+import { useAppSelector } from '../../../../store/store';
+import { checkTags } from '../../../../utils/checkTags';
 import { DeleteNoteForm } from '../../../Modals/DeleteNoteForm/DeleteNoteForm';
 import { EditNoteForm } from '../../../Modals/EditNoteForm/EditNoteForm';
 
@@ -13,6 +16,8 @@ type NotePropsType = {
 export const Note = ({ note }: NotePropsType) => {
   const [isDeletingOpen, setIsDeletingOpen] = useState<boolean>(false);
   const [isEditingOpen, setIsEditingOpen] = useState<boolean>(false);
+
+  const tags = useAppSelector(selectTags);
 
   const deleteNoteOff = useCallback(() => {
     setIsDeletingOpen(false);
@@ -29,6 +34,9 @@ export const Note = ({ note }: NotePropsType) => {
   const editNoteOn = useCallback(() => {
     setIsEditingOpen(true);
   }, []);
+
+  const noteTags: string[] = checkTags(note.content);
+  const tagsForRender = tags.filter(tag => noteTags.includes(tag.name));
 
   return (
     <div className={s.noteContainer}>
@@ -49,9 +57,20 @@ export const Note = ({ note }: NotePropsType) => {
         ✎
       </button>
       <button type="button" onClick={deleteNoteOn}>
-        X
+        ✘
       </button>
-      <div>{note.content}</div>
+      <div>
+        {note.content.split(' ').map(word => (
+          <span key={word} className={word[0] === '#' ? s.tag : ''}>
+            {`${word} `}
+          </span>
+        ))}
+      </div>
+      {tagsForRender.map(tag => (
+        <span key={tag.id} className={s.tag}>
+          {`${tag.name} `}
+        </span>
+      ))}
     </div>
   );
 };

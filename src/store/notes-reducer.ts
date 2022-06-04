@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v1 } from 'uuid';
 
 import { notesAPI } from '../api/notes-api';
+import { checkTags } from '../utils/checkTags';
 
 import { RootState } from './store';
+import { createTag } from './tags-reducer';
 
 export const getNotes = createAsyncThunk(
   'notes/getNotes',
@@ -36,11 +38,17 @@ export const deleteNote = createAsyncThunk(
 
 export const createNote = createAsyncThunk(
   'notes/createNote',
-  async (payload: { title: string; content: string }, { rejectWithValue }) => {
+  async (
+    payload: { title: string; content: string },
+    { dispatch, getState, rejectWithValue },
+  ) => {
     const note: NoteType = { ...payload, id: v1() };
     // dispatch(setAppStatus({ status: 'loading' }));
     try {
       const data = await notesAPI.createNote(note);
+      const { tags } = getState() as RootState;
+      const tagNames = checkTags(payload.content, tags);
+      tagNames.forEach(name => dispatch(createTag(name)));
       // dispatch(setAppStatus({ status: 'succeeded' }));
       return { note: data };
     } catch (e) {
@@ -53,7 +61,7 @@ export const updateNote = createAsyncThunk(
   'notes/updateNote',
   async (
     payload: { id: string; noteModel: Partial<NoteType> },
-    { getState, rejectWithValue },
+    { dispatch, getState, rejectWithValue },
   ) => {
     // dispatch(setAppStatus({status: 'loading'}))
     const note = (getState() as RootState).notes.find(t => t.id === payload.id);
@@ -68,6 +76,9 @@ export const updateNote = createAsyncThunk(
     };
     try {
       const data = await notesAPI.updateNote(noteModel);
+      const { tags } = getState() as RootState;
+      const tagNames = checkTags(noteModel.content, tags);
+      tagNames.forEach(name => dispatch(createTag(name)));
       // dispatch(setAppStatus({status: 'succeeded'}))
       return data;
     } catch (error) {

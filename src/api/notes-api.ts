@@ -18,7 +18,7 @@ export const notesAPI = {
   },
   updateNote(noteModel: NoteType) {
     return instance
-      .put(`notes/${noteModel.id}`, noteModel)
+      .put<NoteType>(`notes/${noteModel.id}`, noteModel)
       .then(res => res.data);
   },
 };

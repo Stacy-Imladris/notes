@@ -8,9 +8,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import { notesReducer } from './notes-reducer';
+import { tagsReducer } from './tags-reducer';
 
 const rootReducer = combineReducers({
   notes: notesReducer,
+  tags: tagsReducer,
 });
 
 export const store = configureStore({
