@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { createNote, getNotes } from '../../../store/notes-reducer';
+import { getNotes } from '../../../store/notes-reducer';
 import { selectNotes } from '../../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { AddNoteForm } from '../../Modals/AddNoteForm/AddNoteForm';

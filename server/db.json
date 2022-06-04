@@ -11,38 +11,26 @@
     {
       "id": "99bfedc0-e394-11ec-bc67-0f5a249634b8",
       "name": "#check"
+    },
+    {
+      "id": "68d6ffc0-e450-11ec-b387-655591d79696",
+      "name": "#new"
+    },
+    {
+      "id": "67e33470-e451-11ec-9144-73334a295e09",
+      "name": "#tag"
     }
   ],
   "notes": [
     {
       "id": "75fcec50-e388-11ec-a9ff-fd7892577468",
       "title": "new Titlej",
-      "content": "new Content #name #new #tag me me me"
+      "content": "new Content #new #tag me me me"
     },
     {
-      "title": "new Title",
-      "content": "new Content",
-      "id": "76333e90-e388-11ec-a9ff-fd7892577468"
-    },
-    {
-      "title": "gfgfgfg",
-      "content": "fgfgfgfg",
-      "id": "cca6a220-e389-11ec-98ae-01530b5ecfe2"
-    },
-    {
-      "title": "stacy",
-      "content": "note",
-      "id": "ff3ac8b0-e389-11ec-a038-0f6649b15e33"
-    },
-    {
-      "id": "226e51d0-e38a-11ec-9704-f7eae98bb2d1",
-      "title": "ghfghghfgh",
-      "content": "fghfghfghghgh"
-    },
-    {
+      "id": "99ba4870-e394-11ec-bc67-0f5a249634b8",
       "title": "dfsgs",
-      "content": "#tagNew jdkf sdfjk #check",
-      "id": "99ba4870-e394-11ec-bc67-0f5a249634b8"
+      "content": "jdkf sdfjk #check"
     }
   ]
 }

@@ -61,7 +61,10 @@ export const Note = ({ note }: NotePropsType) => {
       </button>
       <div>
         {note.content.split(' ').map(word => (
-          <span key={word} className={word[0] === '#' ? s.tag : ''}>
+          <span
+            key={word + Math.random()}
+            className={word[0] === '#' ? s.tag : ''}
+          >
             {`${word} `}
           </span>
         ))}

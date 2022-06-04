@@ -10,10 +10,8 @@ import { createTag } from './tags-reducer';
 export const getNotes = createAsyncThunk(
   'notes/getNotes',
   async (_, { rejectWithValue }) => {
-    // dispatch(setAppStatus({ status: 'loading' }));
     try {
       const data = await notesAPI.getNotes();
-      // dispatch(setAppStatus({ status: 'succeeded' }));
       return { notes: data };
     } catch (error) {
       return rejectWithValue(null);
@@ -24,11 +22,8 @@ export const getNotes = createAsyncThunk(
 export const deleteNote = createAsyncThunk(
   'notes/deleteNote',
   async (id: string, { rejectWithValue }) => {
-    // dispatch(setAppStatus({ status: 'loading' }));
-    // dispatch(changeTodolistEntityStatus({ Tid, status: 'loading' }));
     try {
       await notesAPI.deleteNote(id);
-      // dispatch(setAppStatus({ status: 'succeeded' }));
       return { id };
     } catch (error) {
       return rejectWithValue(null);
@@ -43,13 +38,11 @@ export const createNote = createAsyncThunk(
     { dispatch, getState, rejectWithValue },
   ) => {
     const note: NoteType = { ...payload, id: v1() };
-    // dispatch(setAppStatus({ status: 'loading' }));
     try {
       const data = await notesAPI.createNote(note);
       const { tags } = getState() as RootState;
       const tagNames = checkTags(payload.content, tags);
       tagNames.forEach(name => dispatch(createTag(name)));
-      // dispatch(setAppStatus({ status: 'succeeded' }));
       return { note: data };
     } catch (e) {
       return rejectWithValue(null);
@@ -63,7 +56,6 @@ export const updateNote = createAsyncThunk(
     payload: { id: string; noteModel: Partial<NoteType> },
     { dispatch, getState, rejectWithValue },
   ) => {
-    // dispatch(setAppStatus({status: 'loading'}))
     const note = (getState() as RootState).notes.find(t => t.id === payload.id);
     if (!note) {
       return rejectWithValue('task not found in the state');
@@ -79,7 +71,6 @@ export const updateNote = createAsyncThunk(
       const { tags } = getState() as RootState;
       const tagNames = checkTags(noteModel.content, tags);
       tagNames.forEach(name => dispatch(createTag(name)));
-      // dispatch(setAppStatus({status: 'succeeded'}))
       return data;
     } catch (error) {
       return rejectWithValue(null);

@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, memo, useCallback, useState } from 'react';
 
 import { createNote } from '../../../store/notes-reducer';
-import { useAppDispatch } from '../../../store/store';
+import { selectTags } from '../../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { Modal } from '../Modal/Modal';
 
 type AddNoteFormPropsType = {
