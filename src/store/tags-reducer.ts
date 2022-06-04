@@ -29,8 +29,7 @@ export const deleteTag = createAsyncThunk(
 
 export const createTag = createAsyncThunk(
   'tags/createTag',
-  async (name: string, { rejectWithValue }) => {
-    const tag: TagType = { id: v1(), name };
+  async (tag: TagType, { rejectWithValue }) => {
     try {
       const data = await tagsAPI.createTag(tag);
       return { tag: data };

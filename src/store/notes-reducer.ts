@@ -2,10 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v1 } from 'uuid';
 
 import { notesAPI } from '../api/notes-api';
-import { checkTags } from '../utils/checkTags';
+import { createNewTags } from '../utils/createNewTags';
+import { createTagsList } from '../utils/createTagsList';
+import { deleteOldTags } from '../utils/deleteOldTags';
 
 import { RootState } from './store';
-import { createTag } from './tags-reducer';
+import { TagType } from './tags-reducer';
 
 export const getNotes = createAsyncThunk(
   'notes/getNotes',
@@ -21,9 +23,12 @@ export const getNotes = createAsyncThunk(
 
 export const deleteNote = createAsyncThunk(
   'notes/deleteNote',
-  async (id: string, { rejectWithValue }) => {
+  async (id: string, { dispatch, getState, rejectWithValue }) => {
     try {
+      const { notes } = getState() as RootState;
+      const note = (getState() as RootState).notes.find(t => t.id === id);
       await notesAPI.deleteNote(id);
+      if (note) deleteOldTags(note.tags, [], notes, dispatch);
       return { id };
     } catch (error) {
       return rejectWithValue(null);
@@ -37,12 +42,12 @@ export const createNote = createAsyncThunk(
     payload: { title: string; content: string },
     { dispatch, getState, rejectWithValue },
   ) => {
-    const note: NoteType = { ...payload, id: v1() };
     try {
-      const data = await notesAPI.createNote(note);
       const { tags } = getState() as RootState;
-      const tagNames = checkTags(payload.content, tags);
-      tagNames.forEach(name => dispatch(createTag(name)));
+      const uniqueTags = createTagsList(payload.content);
+      const noteTags = createNewTags(uniqueTags, tags, dispatch);
+      const note: NoteType = { ...payload, id: v1(), tags: noteTags };
+      const data = await notesAPI.createNote(note);
       return { note: data };
     } catch (e) {
       return rejectWithValue(null);
@@ -56,21 +61,24 @@ export const updateNote = createAsyncThunk(
     payload: { id: string; noteModel: Partial<NoteType> },
     { dispatch, getState, rejectWithValue },
   ) => {
+    const { tags, notes } = getState() as RootState;
     const note = (getState() as RootState).notes.find(t => t.id === payload.id);
     if (!note) {
       return rejectWithValue('task not found in the state');
     }
+    let noteTags: TagType[] = [];
+    if (payload.noteModel.content) {
+      const uniqueTags = createTagsList(payload.noteModel.content);
+      noteTags = createNewTags(uniqueTags, tags, dispatch);
+      deleteOldTags(note.tags, uniqueTags, notes, dispatch);
+    }
     const noteModel: NoteType = {
-      id: note.id,
-      title: note.title,
-      content: note.content,
+      ...note,
       ...payload.noteModel,
+      tags: noteTags,
     };
     try {
       const data = await notesAPI.updateNote(noteModel);
-      const { tags } = getState() as RootState;
-      const tagNames = checkTags(noteModel.content, tags);
-      tagNames.forEach(name => dispatch(createTag(name)));
       return data;
     } catch (error) {
       return rejectWithValue(null);
@@ -107,4 +115,5 @@ export type NoteType = {
   id: string;
   title: string;
   content: string;
+  tags: TagType[];
 };

@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { NoteType } from '../../../../store/notes-reducer';
 import { selectTags } from '../../../../store/selectors';
 import { useAppSelector } from '../../../../store/store';
-import { checkTags } from '../../../../utils/checkTags';
+import { createTagsList } from '../../../../utils/createTagsList';
 import { DeleteNoteForm } from '../../../Modals/DeleteNoteForm/DeleteNoteForm';
 import { EditNoteForm } from '../../../Modals/EditNoteForm/EditNoteForm';
 
@@ -35,7 +35,7 @@ export const Note = ({ note }: NotePropsType) => {
     setIsEditingOpen(true);
   }, []);
 
-  const noteTags: string[] = checkTags(note.content);
+  const noteTags: string[] = createTagsList(note.content);
   const tagsForRender = tags.filter(tag => noteTags.includes(tag.name));
 
   return (
