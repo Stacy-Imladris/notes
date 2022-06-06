@@ -1,78 +1,74 @@
 {
   "tags": [
     {
-      "name": "#kasdf",
-      "id": "fee5f920-e5d2-11ec-a8de-1fb0a8af85fe"
+      "name": "#tag",
+      "id": "3bc09950-e5d7-11ec-9a36-db88dcdc9193"
     },
     {
-      "name": "#jhasf",
-      "id": "fee62031-e5d2-11ec-a8de-1fb0a8af85fe"
+      "name": "#delete",
+      "id": "7a821ec0-e5d7-11ec-9a36-db88dcdc9193"
     },
     {
-      "name": "#lafsfg",
-      "id": "082b5340-e5d3-11ec-a8de-1fb0a8af85fe"
+      "name": "#edit",
+      "id": "8b8325c0-e5d7-11ec-9a36-db88dcdc9193"
+    },
+    {
+      "name": "#note",
+      "id": "c89ca080-e5d7-11ec-9a36-db88dcdc9193"
     }
   ],
   "notes": [
     {
-      "title": "fsdfaf",
-      "content": "sadf",
-      "id": "04768570-e5cf-11ec-b110-911ff422d7f3",
-      "tags": []
-    },
-    {
-      "title": " bbmvhjm",
-      "content": "vghncgh",
-      "id": "7ddd2a40-e5cf-11ec-b110-911ff422d7f3",
-      "tags": []
-    },
-    {
-      "title": "vzdfv",
-      "content": "zvfvdfv",
-      "id": "bc62e9c0-e5d0-11ec-b110-911ff422d7f3",
-      "tags": []
-    },
-    {
-      "title": "sdfasdfa",
-      "content": "#kasdf #jasdf #jhasf kahsfjka",
-      "id": "fee64740-e5d2-11ec-a8de-1fb0a8af85fe",
+      "title": "First note",
+      "content": "Here you can create any #tag and it will appear in the field on left side of your screen",
+      "id": "df429ed0-e5d6-11ec-8d76-b336e0217b6b",
       "tags": [
         {
-          "name": "#kasdf",
-          "id": "fee5f920-e5d2-11ec-a8de-1fb0a8af85fe"
-        },
-        {
-          "name": "#jasdf",
-          "id": "fee62030-e5d2-11ec-a8de-1fb0a8af85fe"
-        },
-        {
-          "name": "#jhasf",
-          "id": "fee62031-e5d2-11ec-a8de-1fb0a8af85fe"
+          "name": "#tag",
+          "id": "3bc09950-e5d7-11ec-9a36-db88dcdc9193"
         }
       ]
     },
     {
-      "title": "sfsdf",
-      "content": "fhjajsdf #lafsfg",
-      "id": "082b7a50-e5d3-11ec-a8de-1fb0a8af85fe",
+      "title": "Second note",
+      "content": "You can press button #delete for removing #note from list",
+      "id": "ec9d3310-e5d6-11ec-8d76-b336e0217b6b",
       "tags": [
         {
-          "name": "#lafsfg",
-          "id": "082b5340-e5d3-11ec-a8de-1fb0a8af85fe"
+          "name": "#delete",
+          "id": "7a821ec0-e5d7-11ec-9a36-db88dcdc9193"
+        },
+        {
+          "name": "#note",
+          "id": "c89ca080-e5d7-11ec-9a36-db88dcdc9193"
         }
       ]
     },
     {
-      "title": "dgfbdfg",
-      "content": "bdgfbdfgb dgfdgh",
-      "id": "1a1b9c40-e5d3-11ec-8172-11c0ad4c0e11",
-      "tags": []
+      "title": "Third note",
+      "content": "You can press button #edit for updating #note",
+      "id": "f0d58590-e5d6-11ec-8d76-b336e0217b6b",
+      "tags": [
+        {
+          "name": "#edit",
+          "id": "8b8325c0-e5d7-11ec-9a36-db88dcdc9193"
+        },
+        {
+          "name": "#note",
+          "id": "c89ca080-e5d7-11ec-9a36-db88dcdc9193"
+        }
+      ]
     },
     {
-      "title": "5555555555",
-      "content": "55",
-      "id": "1d857b30-e5d3-11ec-8172-11c0ad4c0e11",
-      "tags": []
+      "title": "Fourth note",
+      "content": "You can select any #tag for filtering notes by it",
+      "id": "be619bc0-e5d7-11ec-9a36-db88dcdc9193",
+      "tags": [
+        {
+          "name": "#tag",
+          "id": "3bc09950-e5d7-11ec-9a36-db88dcdc9193"
+        }
+      ]
     }
   ]
 }
