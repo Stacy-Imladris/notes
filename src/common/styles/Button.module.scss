@@ -1,0 +1,23 @@
+@import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
+
+.button {
+  @include text($titleFontFamily, 24, 1.2, 400);
+  background-color: $primaryColor;
+  cursor: pointer;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  font-size: 18px;
+  border-radius: 10px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 5px;
+
+  &:hover {
+    background-color: #6ea8f5;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+}

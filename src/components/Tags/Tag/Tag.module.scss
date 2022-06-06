@@ -1,3 +1,19 @@
+@import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
+
 .tagContainer {
-  background-color: #f89e9e;
+  @include flex(row, space-between, center, nowrap);
+  margin: 5px 5px;
+  padding: 5px 10px;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: rgba(13, 44, 77, 0.5);
+  }
+}
+
+.selected {
+  @include border(15px, 1);
+  background-color: rgba(13, 44, 77, 0.5);
+  color: $primaryColor;
 }

@@ -20,3 +20,10 @@
   align-items: $alignItems;
   flex-wrap: $wrap;
 }
+
+@mixin border($borderRadius, $bgOpacity) {
+  border-radius: $borderRadius;
+  background-color: rgba(19, 19, 19, $bgOpacity);
+  border: solid $primaryColor 3px;
+  box-shadow: 0 2px 4px 0 $primaryColor, 0 2px 4px 0 $primaryColor;
+}

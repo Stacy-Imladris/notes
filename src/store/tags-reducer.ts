@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v1 } from 'uuid';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { tagsAPI } from '../api/tags-api';
 
@@ -39,7 +38,14 @@ export const createTag = createAsyncThunk(
   },
 );
 
-const tagsInitialState: TagType[] = [];
+export const setFilter = createAction<TagType>('tags/setFilter');
+export const removeFilter = createAction<{ id: string }>('tags/removeFilter');
+export const clearFilter = createAction('tags/clearFilter');
+
+const tagsInitialState = {
+  tags: [] as TagType[],
+  filter: null as Nullable<TagType>,
+};
 
 export const slice = createSlice({
   name: 'tags',
@@ -47,13 +53,24 @@ export const slice = createSlice({
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getTags.fulfilled, (state, action) => action.payload.tags)
+      .addCase(getTags.fulfilled, (state, action) => {
+        state.tags = action.payload.tags;
+      })
       .addCase(createTag.fulfilled, (state, action) => {
-        state.push(action.payload.tag);
+        state.tags.push(action.payload.tag);
       })
       .addCase(deleteTag.fulfilled, (state, action) => {
-        const index = state.findIndex(f => f.id === action.payload.id);
-        if (index > -1) state.splice(index, 1);
+        const index = state.tags.findIndex(f => f.id === action.payload.id);
+        if (index > -1) state.tags.splice(index, 1);
+      })
+      .addCase(setFilter, (state, action) => {
+        state.filter = action.payload;
+      })
+      .addCase(removeFilter, (state, action) => {
+        state.filter = null;
+      })
+      .addCase(clearFilter, state => {
+        state.filter = null;
       }),
 });
 
@@ -64,3 +81,5 @@ export type TagType = {
   id: string;
   name: string;
 };
+export type Nullable<T> = null | T;
+export type TagsInitialStateType = typeof tagsInitialState;

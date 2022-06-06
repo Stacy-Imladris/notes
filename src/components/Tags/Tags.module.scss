@@ -1,4 +1,18 @@
+@import 'src/common/styles/sass/mixins';
+@import 'src/common/styles/sass/variables';
+
 .tagsContainer {
-  background-color: aqua;
-  width: 20%;
+  @include border(10px, 0.5);
+  width: 25%;
+  padding: 5px;
+  margin-top: 10px;
+
+  .titleAndBtn {
+    @include flex(row, space-around, center, nowrap);
+
+    .title {
+      text-align: center;
+      @include text($titleFontFamily, 24, 1.2, 700);
+    }
+  }
 }

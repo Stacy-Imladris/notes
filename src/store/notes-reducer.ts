@@ -11,9 +11,9 @@ import { TagType } from './tags-reducer';
 
 export const getNotes = createAsyncThunk(
   'notes/getNotes',
-  async (_, { rejectWithValue }) => {
+  async (param: string, { rejectWithValue }) => {
     try {
-      const data = await notesAPI.getNotes();
+      const data = await notesAPI.getNotes(param);
       return { notes: data };
     } catch (error) {
       return rejectWithValue(null);
@@ -43,7 +43,7 @@ export const createNote = createAsyncThunk(
     { dispatch, getState, rejectWithValue },
   ) => {
     try {
-      const { tags } = getState() as RootState;
+      const { tags } = (getState() as RootState).tags;
       const uniqueTags = createTagsList(payload.content);
       const noteTags = createNewTags(uniqueTags, tags, dispatch);
       const note: NoteType = { ...payload, id: v1(), tags: noteTags };
@@ -69,7 +69,7 @@ export const updateNote = createAsyncThunk(
     let noteTags: TagType[] = [];
     if (payload.noteModel.content) {
       const uniqueTags = createTagsList(payload.noteModel.content);
-      noteTags = createNewTags(uniqueTags, tags, dispatch);
+      noteTags = createNewTags(uniqueTags, tags.tags, dispatch);
       deleteOldTags(note.tags, uniqueTags, notes, dispatch);
     }
     const noteModel: NoteType = {
@@ -95,8 +95,10 @@ export const slice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(deleteNote.fulfilled, (state, action) => {
-        const index = state.findIndex(f => f.id === action.payload.id);
-        if (index > -1) state.splice(index, 1);
+        state.splice(
+          state.findIndex(f => f.id === action.payload.id),
+          1,
+        );
       })
       .addCase(getNotes.fulfilled, (state, action) => action.payload.notes)
       .addCase(createNote.fulfilled, (state, action) => {

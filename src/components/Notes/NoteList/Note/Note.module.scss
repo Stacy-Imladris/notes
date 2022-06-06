@@ -1,7 +1,39 @@
+@import 'src/common/styles/sass/mixins';
+@import 'src/common/styles/sass/variables';
+
 .noteContainer {
-  background-color: #b6f3c4;
+  @include border(10px, 0.5);
+  padding: 7px;
+  margin: 10px;
+
+  .btnAndTitle {
+    @include flex(row, space-between, center, nowrap);
+
+    .title {
+      width: 80%;
+      text-align: center;
+    }
+
+    .buttons {
+      @include flex(row, center, center, nowrap);
+    }
+  }
+
+
+  .note {
+    padding: 5px;
+  }
 
   .tag {
-    color: #c006dc;
+    color: $primaryColor;
+  }
+
+  .tagEl {
+    display: inline-block;
+    margin: 10px 5px 5px 5px;
+  }
+
+  &:hover {
+    background-color: rgba(13, 44, 77, 0.5);
   }
 }

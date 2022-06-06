@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import style from '../../../../common/styles/Button.module.scss';
 import { NoteType } from '../../../../store/notes-reducer';
 import { selectTags } from '../../../../store/selectors';
 import { useAppSelector } from '../../../../store/store';
@@ -50,16 +51,28 @@ export const Note = ({ note }: NotePropsType) => {
         isOpen={isEditingOpen}
         note={note}
       />
-      <div>
-        <b>{note.title}</b>
+      <div className={s.btnAndTitle}>
+        <div className={s.title}>
+          <b>{note.title}</b>
+        </div>
+        <div className={s.buttons}>
+          <div>
+            <button type="button" onClick={editNoteOn} className={style.button}>
+              ✎
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={deleteNoteOn}
+              className={style.button}
+            >
+              ✘
+            </button>
+          </div>
+        </div>
       </div>
-      <button type="button" onClick={editNoteOn}>
-        ✎
-      </button>
-      <button type="button" onClick={deleteNoteOn}>
-        ✘
-      </button>
-      <div>
+      <div className={s.note}>
         {note.content.split(' ').map(word => (
           <span
             key={word + Math.random()}
@@ -70,8 +83,8 @@ export const Note = ({ note }: NotePropsType) => {
         ))}
       </div>
       {tagsForRender.map(tag => (
-        <span key={tag.id} className={s.tag}>
-          {`${tag.name} `}
+        <span key={tag.id} className={`${s.tag} ${s.tagEl}`}>
+          {tag.name}
         </span>
       ))}
     </div>

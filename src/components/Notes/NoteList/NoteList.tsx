@@ -1,40 +1,29 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { getNotes } from '../../../store/notes-reducer';
-import { selectNotes } from '../../../store/selectors';
+import { selectFilter, selectNotes } from '../../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { AddNoteForm } from '../../Modals/AddNoteForm/AddNoteForm';
 
 import { Note } from './Note/Note';
 import s from './NoteList.module.scss';
 
 export const NoteList = () => {
-  const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
-
   const notes = useAppSelector(selectNotes);
+  const filter = useAppSelector(selectFilter);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getNotes());
+    dispatch(getNotes(''));
   }, []);
 
-  const addNoteOff = useCallback(() => {
-    setIsAddingOpen(false);
-  }, []);
-
-  const addNoteOn = useCallback(() => {
-    setIsAddingOpen(true);
-  }, []);
+  const filteredNotes = !filter
+    ? notes
+    : notes.filter(note => note.tags.map(m => m.name).includes(filter.name));
 
   return (
     <div className={s.noteListContainer}>
-      <AddNoteForm onClickNotOpen={addNoteOff} isOpen={isAddingOpen} />
-      <div>NoteList</div>
-      <button type="button" onClick={addNoteOn}>
-        Add new Note
-      </button>
-      {notes.map(note => (
+      {filteredNotes.map(note => (
         <Note key={note.id} note={note} />
       ))}
     </div>

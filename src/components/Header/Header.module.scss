@@ -1,8 +1,14 @@
 @import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
 
 .headerContainer {
+  @include text($titleFontFamily, 45, 1.2, 800);
+  @include flex(row, center, center, nowrap);
   position: sticky;
   top: 0;
   height: 8vh;
+  margin-bottom: 20px;
   background-color: $bgColor;
+  box-shadow: 0 0 13px 1px $primaryColor;
+  z-index: 1;
 }

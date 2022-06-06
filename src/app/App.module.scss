@@ -1,10 +1,25 @@
 @import "src/common/styles/sass/mixins";
+@import "src/common/styles/sass/variables";
 
 .appContainer {
   background-color: $bgSecondColor;
   min-height: 100vh;
+  color: $textColor;
+
+  .infoBlock {
+    @include container();
+    @include text($textFontFamily, 36px, 1.2, 400);
+    margin-top: 40px;
+    text-align: center;
+    min-height: 70vh;
+
+    .typing {
+      margin: 50px 0 30px 0;
+    }
+  }
+
   .appBlock {
-    min-height: 84vh;
+    min-height: 81.5vh;
     @include container();
     @include flex(row, flex-start, flex-start, nowrap);
   }

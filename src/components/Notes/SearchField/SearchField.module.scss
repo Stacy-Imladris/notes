@@ -1,4 +1,15 @@
+@import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
+
 .searchFieldContainer {
-  background-color: #c19be7;
-  height: 50px;
+  padding: 5px 10px;
+  margin-top: 5px;
+  position: relative;
+  @include flex(row, space-between, center, nowrap);
+
+  .searchIcon {
+    position: absolute;
+    top: 13px;
+    left: 22px;
+  }
 }

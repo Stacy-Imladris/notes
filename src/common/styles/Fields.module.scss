@@ -1,0 +1,39 @@
+@import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
+
+.input {
+  @include text($titleFontFamily, 24, 1.2, 400);
+  background-color: $primaryColor;
+  height: 40px;
+  width: 70px;
+  border: solid $primaryColor 2px;
+  border-radius: 25px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  padding: 0 0 0 40px;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2), 0 5px 5px 0 rgba(0,0,0,0.19);
+
+  &:focus {
+    width: 200px;
+    background-color: #6ea8f5;
+  }
+
+  &::-webkit-input-placeholder {
+    color: white;
+  }
+}
+
+.textarea {
+  width: 200px;
+  height: 100px;
+  padding: 0 15px;
+  background-color: $primaryColor;
+  border: solid $primaryColor 2px;
+  border-radius: 25px;
+  margin: 10px 0;
+
+  &::-webkit-input-placeholder {
+    color: white;
+    opacity: 0.7;
+  }
+}

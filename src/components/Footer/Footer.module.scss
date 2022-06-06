@@ -1,6 +1,12 @@
 @import 'src/common/styles/sass/variables';
+@import 'src/common/styles/sass/mixins';
 
 .footerContainer {
   background-color: $bgColor;
   height: 8vh;
+  @include flex(row, center, center, nowrap);
+  .copyright {
+    @include text($textFontFamily, 14px, 1.8, 300);
+    opacity: 0.5;
+  }
 }
