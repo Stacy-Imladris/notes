@@ -10,23 +10,23 @@ import { Tags } from '../components/Tags/Tags';
 import s from './App.module.scss';
 
 export const App = () => {
-  const opacityValue = 0.3;
+  const opacityValue = 0.2;
   const min = -10;
   const max = 10;
 
   return (
     <div className={s.appContainer}>
-      <Header />
       <Parallax
         bgImage={background}
         strength={550}
         bgImageStyle={{
           width: '100vw',
-          height: '70vh',
+          height: '100vh',
           objectFit: 'cover',
           opacity: opacityValue,
         }}
       >
+        <Header />
         <div className={s.infoBlock}>
           The NOTES & TAGS application will help you properly store, use and
           search for notes. Here you can create a new note, delete an

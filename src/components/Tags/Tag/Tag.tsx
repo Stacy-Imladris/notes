@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../../store/store';
 import {
   setFilter,
   deleteTag,
-  removeFilter,
   TagType,
+  clearFilter,
+  removeFilter,
 } from '../../../store/tags-reducer';
 
 import s from './Tag.module.scss';

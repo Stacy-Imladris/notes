@@ -8,8 +8,8 @@
 
   .infoBlock {
     @include container();
-    @include text($textFontFamily, 36px, 1.2, 400);
-    margin-top: 40px;
+    @include text($textFontFamily, 30px, 1.2, 400);
+    margin-top: 90px;
     text-align: center;
     min-height: 70vh;
 
