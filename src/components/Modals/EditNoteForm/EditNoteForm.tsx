@@ -15,62 +15,65 @@ type EditNoteFormPropsType = {
   note: NoteType;
 };
 
-export const EditNoteForm: FC<EditNoteFormPropsType> = memo(
-  ({ onClickNotOpen, isOpen, note }) => {
-    const [title, setTitle] = useState<string>(note.title);
-    const [content, setContent] = useState<string>(note.content);
-    const [error, setError] = useState<string>('');
+export const EditNoteForm: FC<EditNoteFormPropsType> = ({
+  onClickNotOpen,
+  isOpen,
+  note,
+}) => {
+  if (note.title === 'f') console.log(note.content);
+  const [title, setTitle] = useState<string>(note.title);
+  const [content, setContent] = useState<string>(note.content);
+  const [error, setError] = useState<string>('');
 
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const onClickCleanUpStates = () => {
-      onClickNotOpen();
-      setTitle(note.title);
-      setContent(note.content);
-      setError('');
-    };
+  const onClickCleanUpStates = () => {
+    onClickNotOpen();
+    setTitle(note.title);
+    setContent(note.content);
+    setError('');
+  };
 
-    const onClickUpdateNote = useCallback(() => {
-      if (title.trim() && content.trim()) {
-        dispatch(updateNote({ id: note.id, noteModel: { title, content } }));
-        onClickCleanUpStates();
-      } else {
-        setError('Title and content is required!');
-      }
-    }, [dispatch, note.id, title, content]);
+  const onClickUpdateNote = useCallback(() => {
+    if (title.trim() && content.trim()) {
+      dispatch(updateNote({ id: note.id, noteModel: { title, content } }));
+      onClickCleanUpStates();
+    } else {
+      setError('Title and content is required!');
+    }
+  }, [dispatch, note.id, title, content]);
 
-    const onChangeTitle = (value: string) => {
-      setTitle(value);
-    };
+  const onChangeTitle = useCallback((value: string) => {
+    setTitle(value);
+  }, []);
 
-    const onChangeContent = (value: string) => {
-      setContent(value);
-    };
+  const onChangeContent = useCallback((value: string) => {
+    setContent(value);
+  }, []);
 
-    return (
-      <Modal
-        onClickNotOpen={onClickCleanUpStates}
-        isOpen={isOpen}
-        modalStyle={{ width: '270px' }}
-      >
-        <div>Edit note</div>
-        <div className={errorStyle.error}>{error}</div>
-        <Input
-          value={title}
-          onChangeCallback={onChangeTitle}
-          placeholder="Enter new title"
-          style={{ width: '200px', padding: '0 15px' }}
-        />
-        <Textarea
-          value={content}
-          onChangeCallback={onChangeContent}
-          placeholder="Enter new content"
-        />
-        <div className={style.buttons}>
-          <Button name="Cancel" onClickHandle={onClickCleanUpStates} />
-          <Button name="Save" onClickHandle={onClickUpdateNote} />
-        </div>
-      </Modal>
-    );
-  },
-);
+  return (
+    <Modal
+      onClickNotOpen={onClickCleanUpStates}
+      isOpen={isOpen}
+      modalStyle={{ width: '270px' }}
+    >
+      <div>Edit note</div>
+      <div className={errorStyle.error}>{error}</div>
+      <Input
+        value={title}
+        onChangeCallback={onChangeTitle}
+        placeholder="Enter new title"
+        style={{ width: '200px', padding: '0 15px' }}
+      />
+      <Textarea
+        value={content}
+        onChangeCallback={onChangeContent}
+        placeholder="Enter new content"
+      />
+      <div className={style.buttons}>
+        <Button name="Cancel" onClickHandle={onClickCleanUpStates} />
+        <Button name="Save" onClickHandle={onClickUpdateNote} />
+      </div>
+    </Modal>
+  );
+};

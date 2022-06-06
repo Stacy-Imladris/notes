@@ -1,5 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 
+import { v1 } from 'uuid';
+
 import { Button } from '../../../../common/components/Button/Button';
 import { Title } from '../../../../common/components/Title/Title';
 import { NoteType } from '../../../../store/notes-reducer';
@@ -63,10 +65,7 @@ export const Note = memo(({ note }: NotePropsType) => {
       </div>
       <div className={s.note}>
         {note.content.split(' ').map(word => (
-          <span
-            key={word + Math.random()}
-            className={word[0] === '#' ? s.tag : ''}
-          >
+          <span key={v1()} className={word[0] === '#' ? s.tag : ''}>
             {`${word} `}
           </span>
         ))}

@@ -37,7 +37,6 @@ export const App = () => {
               speed={100}
             />
           </div>
-          <div>(｡◕‿◕｡)</div>
         </div>
       </Parallax>
       <div className={s.appBlock}>

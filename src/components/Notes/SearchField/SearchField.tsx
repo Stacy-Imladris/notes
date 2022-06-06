@@ -54,7 +54,7 @@ export const SearchField = () => {
         onChangeCallback={onChangeSetValue}
         placeholder="Search"
       />
-      <Button name="Add new note" onClickHandle={addNoteOn} />
+      <Button name="Add note" onClickHandle={addNoteOn} />
     </div>
   );
 };
