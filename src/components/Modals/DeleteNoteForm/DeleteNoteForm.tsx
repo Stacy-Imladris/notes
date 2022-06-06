@@ -1,6 +1,7 @@
 import { FC, memo, useCallback } from 'react';
 
-import style from '../../../common/styles/Button.module.scss';
+import { Button } from '../../../common/components/Button/Button';
+import style from '../../../common/styles/Buttons.module.scss';
 import { deleteNote } from '../../../store/notes-reducer';
 import { useAppDispatch } from '../../../store/store';
 import { Modal } from '../Modal/Modal';
@@ -22,22 +23,13 @@ export const DeleteNoteForm: FC<DeleteNoteFormPropsType> = memo(
     return (
       <Modal onClickNotOpen={onClickNotOpen} isOpen={isOpen}>
         <div style={{ margin: '15px' }}>Do you really want to remove note?</div>
-        <div>
-          <button
-            type="button"
-            onClick={onClickNotOpen}
-            className={style.button}
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={onClickDeleteNote}
-            className={style.button}
+        <div className={style.buttons}>
+          <Button name="Cancel" onClickHandle={onClickNotOpen} />
+          <Button
+            name="Delete"
+            onClickHandle={onClickDeleteNote}
             style={{ backgroundColor: '#f34e4e' }}
-          >
-            Delete
-          </button>
+          />
         </div>
       </Modal>
     );

@@ -9,10 +9,5 @@
 
   .titleAndBtn {
     @include flex(row, space-around, center, nowrap);
-
-    .title {
-      text-align: center;
-      @include text($titleFontFamily, 24, 1.2, 700);
-    }
   }
 }

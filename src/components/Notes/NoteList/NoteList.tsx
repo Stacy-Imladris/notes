@@ -22,10 +22,12 @@ export const NoteList = () => {
     : notes.filter(note => note.tags.map(m => m.name).includes(filter.name));
 
   return (
-    <div className={s.noteListContainer}>
-      {filteredNotes.map(note => (
-        <Note key={note.id} note={note} />
-      ))}
+    <div>
+      {!filteredNotes.length ? (
+        <div className={s.text}>Nothing was found</div>
+      ) : (
+        filteredNotes.map(note => <Note key={note.id} note={note} />)
+      )}
     </div>
   );
 };

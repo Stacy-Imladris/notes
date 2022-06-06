@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import style from '../../common/styles/Button.module.scss';
+import { Button } from '../../common/components/Button/Button';
+import { Title } from '../../common/components/Title/Title';
 import { selectTags } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { clearFilter, getTags } from '../../store/tags-reducer';
@@ -15,25 +16,17 @@ export const Tags = () => {
 
   useEffect(() => {
     dispatch(getTags());
-  }, []);
+  }, [dispatch]);
 
-  const onClickClearFilter = () => {
+  const onClickClearFilter = useCallback(() => {
     dispatch(clearFilter());
-  };
+  }, [dispatch]);
 
   return (
     <div className={s.tagsContainer}>
       <div className={s.titleAndBtn}>
-        <div className={s.title}>Tags</div>
-        <div>
-          <button
-            type="button"
-            onClick={onClickClearFilter}
-            className={style.button}
-          >
-            Show all
-          </button>
-        </div>
+        <Title name="Tags" />
+        <Button name="Show all" onClickHandle={onClickClearFilter} />
       </div>
       {tags.map(tag => (
         <Tag key={tag.id} tag={tag} />

@@ -19,7 +19,7 @@
   }
 
   .appBlock {
-    min-height: 81.5vh;
+    min-height: 84vh;
     @include container();
     @include flex(row, flex-start, flex-start, nowrap);
   }

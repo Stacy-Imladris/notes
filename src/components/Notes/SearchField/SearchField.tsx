@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import style from '../../../common/styles/Button.module.scss';
-import fieldsStyle from '../../../common/styles/Fields.module.scss';
+import { Button } from '../../../common/components/Button/Button';
+import { Input } from '../../../common/components/Input/Input';
 import { getNotes } from '../../../store/notes-reducer';
 import { useAppDispatch } from '../../../store/store';
 import { AddNoteForm } from '../../Modals/AddNoteForm/AddNoteForm';
@@ -23,14 +23,14 @@ export const SearchField = () => {
   );
 
   const onChangeSetValue = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setValue(e.currentTarget.value);
+    (value1: string) => {
+      setValue(value1);
       clearTimeout(timerId);
       const delayTime = 500;
       const id: number = +setTimeout(
         onChangeDebounceRequest,
         delayTime,
-        e.currentTarget.value,
+        value1,
       );
       setTimerId(id);
     },
@@ -49,19 +49,12 @@ export const SearchField = () => {
     <div className={s.searchFieldContainer}>
       <AddNoteForm onClickNotOpen={addNoteOff} isOpen={isAddingOpen} />
       <div className={s.searchIcon}>🔍︎</div>
-      <div>
-        <input
-          value={value}
-          onChange={onChangeSetValue}
-          placeholder="Search"
-          className={fieldsStyle.input}
-        />
-      </div>
-      <div>
-        <button type="button" onClick={addNoteOn} className={style.button}>
-          Add new note
-        </button>
-      </div>
+      <Input
+        value={value}
+        onChangeCallback={onChangeSetValue}
+        placeholder="Search"
+      />
+      <Button name="Add new note" onClickHandle={addNoteOn} />
     </div>
   );
 };

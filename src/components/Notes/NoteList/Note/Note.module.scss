@@ -11,14 +11,12 @@
 
     .title {
       width: 80%;
-      text-align: center;
     }
 
     .buttons {
       @include flex(row, center, center, nowrap);
     }
   }
-
 
   .note {
     padding: 5px;

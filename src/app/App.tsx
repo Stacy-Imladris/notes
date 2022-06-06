@@ -1,7 +1,7 @@
 import { Parallax } from 'react-parallax';
 import ReactTypingEffect from 'react-typing-effect';
 
-import background from '../assets/images/3.jpg';
+import background from '../assets/images/background.jpg';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 import { Notes } from '../components/Notes/Notes';
@@ -11,11 +11,10 @@ import s from './App.module.scss';
 
 export const App = () => {
   const opacityValue = 0.2;
-  const min = -10;
-  const max = 10;
 
   return (
     <div className={s.appContainer}>
+      <Header />
       <Parallax
         bgImage={background}
         strength={550}
@@ -26,7 +25,6 @@ export const App = () => {
           opacity: opacityValue,
         }}
       >
-        <Header />
         <div className={s.infoBlock}>
           The NOTES & TAGS application will help you properly store, use and
           search for notes. Here you can create a new note, delete an

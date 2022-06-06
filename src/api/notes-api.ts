@@ -6,7 +6,6 @@ import { instance } from './api';
 
 export const notesAPI = {
   getNotes(q: string) {
-    // const getSpecificNote = param ? `?q=${param}` : '';
     return instance
       .get<NoteType[]>(`notes`, q ? { params: { q } } : {})
       .then(res => res.data);

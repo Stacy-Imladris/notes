@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
-import style from '../../../../common/styles/Button.module.scss';
+import { Button } from '../../../../common/components/Button/Button';
+import { Title } from '../../../../common/components/Title/Title';
 import { NoteType } from '../../../../store/notes-reducer';
 import { selectTags } from '../../../../store/selectors';
 import { useAppSelector } from '../../../../store/store';
@@ -14,7 +15,7 @@ type NotePropsType = {
   note: NoteType;
 };
 
-export const Note = ({ note }: NotePropsType) => {
+export const Note = memo(({ note }: NotePropsType) => {
   const [isDeletingOpen, setIsDeletingOpen] = useState<boolean>(false);
   const [isEditingOpen, setIsEditingOpen] = useState<boolean>(false);
 
@@ -53,23 +54,11 @@ export const Note = ({ note }: NotePropsType) => {
       />
       <div className={s.btnAndTitle}>
         <div className={s.title}>
-          <b>{note.title}</b>
+          <Title name={note.title} />
         </div>
         <div className={s.buttons}>
-          <div>
-            <button type="button" onClick={editNoteOn} className={style.button}>
-              ✎
-            </button>
-          </div>
-          <div>
-            <button
-              type="button"
-              onClick={deleteNoteOn}
-              className={style.button}
-            >
-              ✘
-            </button>
-          </div>
+          <Button name="✎" onClickHandle={editNoteOn} />
+          <Button name="✘" onClickHandle={deleteNoteOn} />
         </div>
       </div>
       <div className={s.note}>
@@ -89,4 +78,4 @@ export const Note = ({ note }: NotePropsType) => {
       ))}
     </div>
   );
-};
+});

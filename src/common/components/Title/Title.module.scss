@@ -1,0 +1,7 @@
+@import '../../styles/sass/mixins';
+@import '../../styles/sass/variables';
+
+.title {
+  text-align: center;
+  @include text($titleFontFamily, 24, 1.2, 700);
+}

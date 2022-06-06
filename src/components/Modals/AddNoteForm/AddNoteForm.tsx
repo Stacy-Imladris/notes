@@ -1,8 +1,10 @@
-import { ChangeEvent, FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 
-import style from '../../../common/styles/Button.module.scss';
+import { Button } from '../../../common/components/Button/Button';
+import { Input } from '../../../common/components/Input/Input';
+import { Textarea } from '../../../common/components/Textarea/Textarea';
+import style from '../../../common/styles/Buttons.module.scss';
 import errorStyle from '../../../common/styles/Error.module.scss';
-import fieldsStyle from '../../../common/styles/Fields.module.scss';
 import { createNote } from '../../../store/notes-reducer';
 import { useAppDispatch } from '../../../store/store';
 import { Modal } from '../Modal/Modal';
@@ -35,13 +37,13 @@ export const AddNoteForm: FC<AddNoteFormPropsType> = memo(
       }
     }, [dispatch, onClickNotOpen, title, content]);
 
-    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-      setTitle(e.currentTarget.value);
+    const onChangeTitle = (value: string) => {
+      setTitle(value);
       setError('');
     };
 
-    const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setContent(e.currentTarget.value);
+    const onChangeContent = (value: string) => {
+      setContent(value);
       setError('');
     };
 
@@ -53,30 +55,20 @@ export const AddNoteForm: FC<AddNoteFormPropsType> = memo(
       >
         <div>Add new note</div>
         <div className={errorStyle.error}>{error}</div>
-        <input
+        <Input
           value={title}
-          placeholder="Enter note title"
-          onChange={onChangeTitle}
-          className={fieldsStyle.input}
+          onChangeCallback={onChangeTitle}
+          placeholder="Enter new title"
           style={{ width: '200px', padding: '0 15px' }}
         />
-        <textarea
+        <Textarea
           value={content}
+          onChangeCallback={onChangeContent}
           placeholder="Enter note content"
-          onChange={onChangeContent}
-          className={fieldsStyle.textarea}
         />
-        <div>
-          <button
-            type="button"
-            onClick={onClickCleanUpStates}
-            className={style.button}
-          >
-            Cancel
-          </button>
-          <button type="button" onClick={addNewNote} className={style.button}>
-            Save
-          </button>
+        <div className={style.buttons}>
+          <Button name="Cancel" onClickHandle={onClickCleanUpStates} />
+          <Button name="Save" onClickHandle={addNewNote} />
         </div>
       </Modal>
     );

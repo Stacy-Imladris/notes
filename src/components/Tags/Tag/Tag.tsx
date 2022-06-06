@@ -1,11 +1,12 @@
-import style from '../../../common/styles/Button.module.scss';
+import { memo, useCallback } from 'react';
+
+import style from '../../../common/components/Button/Button.module.scss';
 import { selectFilter } from '../../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import {
   setFilter,
   deleteTag,
   TagType,
-  clearFilter,
   removeFilter,
 } from '../../../store/tags-reducer';
 
@@ -15,23 +16,24 @@ type TagPropsType = {
   tag: TagType;
 };
 
-export const Tag = ({ tag }: TagPropsType) => {
+export const Tag = memo(({ tag }: TagPropsType) => {
   const filter = useAppSelector(selectFilter);
+  const { id, name } = tag;
 
   const dispatch = useAppDispatch();
 
-  const removeTag = () => {
-    dispatch(deleteTag(tag.id));
-  };
+  const removeTag = useCallback(() => {
+    dispatch(deleteTag(id));
+  }, [dispatch, id]);
 
   const onClickSetFilter = () => {
-    if (!filter || filter.name !== tag.name) dispatch(setFilter(tag));
-    else if (filter.name === tag.name) {
-      dispatch(removeFilter({ id: tag.id }));
+    if (!filter || filter.name !== name) dispatch(setFilter(tag));
+    else if (filter.name === name) {
+      dispatch(removeFilter({ id }));
     }
   };
 
-  const tagStyle = filter && filter.id === tag.id ? s.selected : '';
+  const tagStyle = filter && filter.id === id ? s.selected : '';
 
   return (
     <div
@@ -39,7 +41,7 @@ export const Tag = ({ tag }: TagPropsType) => {
       onClick={onClickSetFilter}
       className={`${s.tagContainer} ${tagStyle}`}
     >
-      <div>{tag.name}</div>
+      <div>{name}</div>
       <div>
         <button type="button" onClick={removeTag} className={style.button}>
           ✘
@@ -47,4 +49,4 @@ export const Tag = ({ tag }: TagPropsType) => {
       </div>
     </div>
   );
-};
+});

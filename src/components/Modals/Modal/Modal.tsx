@@ -11,6 +11,7 @@ type ModalPropsType = {
   modalStyle?: CSSProperties;
   children: ReactNode;
 };
+
 export const Modal: FC<ModalPropsType> = memo(
   ({ onClickNotOpen, isOpen, children, backgroundStyle, modalStyle }) => {
     if (!isOpen) return null;
