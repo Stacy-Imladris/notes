@@ -20,7 +20,6 @@ export const EditNoteForm: FC<EditNoteFormPropsType> = ({
   isOpen,
   note,
 }) => {
-  if (note.title === 'f') console.log(note.content);
   const [title, setTitle] = useState<string>(note.title);
   const [content, setContent] = useState<string>(note.content);
   const [error, setError] = useState<string>('');
